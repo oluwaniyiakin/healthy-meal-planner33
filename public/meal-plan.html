@@ -17,7 +17,7 @@
         
         <div class="controls">
             <button id="generateMealPlan" aria-label="Generate Meal Plan">Generate Meal Plan</button>
-            <button id="saveMealPlan" aria-label="Save Meal Plan" disabled>Save Meal Plan</button>
+            <button id="saveMealPlan" aria-label="Save Meal Plan">Save Meal Plan</button>
         </div>
 
         <p id="status-message" class="status-message" role="alert"></p> <!-- Status message for user feedback -->
@@ -33,6 +33,14 @@
 
     <!-- Scripts -->
     <script src="src/components/navbar.js" type="module"></script>
-    <script src="js/mealPlan.js" type="module"></script>
+    <script type="module">
+        document.getElementById("generateMealPlan").addEventListener("click", () => {
+            window.location.href = "detailed-meal-plan.html";
+        });
+
+        document.getElementById("saveMealPlan").addEventListener("click", () => {
+            window.location.href = "detailed-meal-plan.html";
+        });
+    </script>
 </body>
 </html>
