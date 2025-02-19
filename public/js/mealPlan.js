@@ -1,32 +1,17 @@
-// Import Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"; 
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 
-// Firebase Configuration (Ensure these details are correct)
-const firebaseConfig = {
-    apiKey: "AIzaSyDDSVRX667OI36j0n37JwgnARs635B4y30",
-    authDomain: "mealplan2-53c7b.firebaseapp.com",
-    projectId: "mealplan2-53c7b",
-    storageBucket: "mealplan2-53c7b.appspot.com",
-    messagingSenderId: "779303908945",
-    appId: "1:779303908945:web:39f49081666850d1032a70",
-    measurementId: "G-P3TF8LTS9F"
-};
+// Firebase Setup
+const auth = getAuth();
+const db = getFirestore();
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// API Configuration (Use environment variables in production)
+// API Configuration (Replace API key with env variables in production)
 const SPOONACULAR_API_KEY = "c4203a13daf3424886c5349745ea5d8c";
 const API_URL = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&apiKey=${SPOONACULAR_API_KEY}`;
 
-// Wait for DOM to load
 document.addEventListener("DOMContentLoaded", () => {
-    const generateMealBtn = document.getElementById("generate-meal-plan");
-    const saveMealBtn = document.getElementById("save-meal-plan");
+    const generateMealBtn = document.getElementById("generateMealPlan");
+    const saveMealBtn = document.getElementById("saveMealPlan");
     const mealPlanContainer = document.getElementById("meal-plan-container");
     const statusMessage = document.getElementById("status-message");
 
