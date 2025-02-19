@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailed Meal Plan | Healthy Meal Planner</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <script defer src="src/main.js"></script>
+    <script defer src="src/components/navbar.js"></script>
+    <script defer src="src/services/storage.js"></script>
+    <script defer src="src/utils/domUtils.js"></script>
+    <script defer src="src/api/apiHandler.js"></script>
+    <script defer src="src/eventHandlers.js"></script>
+    <script defer src="src/meal-plan.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav id="navbar"></nav>
+    </header>
+
+    <main class="container">
+        <h1>7-Day Detailed Meal Plan</h1>
+        <p class="intro-text">A balanced meal plan for the entire week with nutritional insights.</p>
+        
+        <section id="meal-plan">
+            <!-- Days of the week dynamically generated -->
+        </section>
+
+        <div class="calorie-summary">
+            <h3>Total Calories This Week: <span id="totalCalories">0</span> kcal</h3>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const mealPlanData = [
+                {
+                    day: "Monday",
+                    meals: [
+                        { type: "Breakfast", name: "Oatmeal with Berries", calories: 250, img: "images/oatmeal.jpg" },
+                        { type: "Lunch", name: "Grilled Chicken Salad", calories: 400, img: "images/salad.jpg" },
+                        { type: "Dinner", name: "Salmon with Quinoa", calories: 550, img: "images/salmon.jpg" }
+                    ]
+                },
+                {
+                    day: "Tuesday",
+                    meals: [
+                        { type: "Breakfast", name: "Greek Yogurt & Nuts", calories: 300, img: "images/yogurt.jpg" },
+                        { type: "Lunch", name: "Quinoa & Veggie Bowl", calories: 450, img: "images/quinoa-bowl.jpg" },
+                        { type: "Dinner", name: "Tofu Stir-fry with Rice", calories: 500, img: "images/tofu.jpg" }
+                    ]
+                }
+                // Add other days similarly...
+            ];
+
+            let totalCalories = 0;
+            const mealPlanSection = document.getElementById("meal-plan");
+
+            mealPlanData.forEach(day => {
+                let dayCalories = day.meals.reduce((sum, meal) => sum + meal.calories, 0);
+                totalCalories += dayCalories;
+
+                let daySection = document.createElement("div");
+                daySection.classList.add("day");
+
+                daySection.innerHTML = `
+                    <button class="collapsible">${day.day} - ${dayCalories} kcal</button>
+                    <div class="content">
+                        ${day.meals.map(meal => `
+                            <div class="meal">
+                                <img src="${meal.img}" alt="${meal.name}">
+                                <div class="meal-info">
+                                    <h4>${meal.type}: ${meal.name}</h4>
+                                    <p>Calories: ${meal.calories}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                mealPlanSection.appendChild(daySection);
+            });
+
+            document.getElementById("totalCalories").textContent = totalCalories;
+
+            // Collapsible sections
+            document.querySelectorAll(".collapsible").forEach(button => {
+                button.addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    let content = this.nextElementSibling;
+                    content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
+                });
+            });
+        });
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f8f8;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .day {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .collapsible {
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            font-size: 1.2rem;
+            transition: background 0.3s;
+        }
+
+        .collapsible:hover {
+            background: #45a049;
+        }
+
+        .collapsible.active {
+            background: #388E3C;
+        }
+
+        .content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #fff;
+        }
+
+        .meal {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .meal:last-child {
+            border-bottom: none;
+        }
+
+        .meal img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            margin-right: 15px;
+        }
+
+        .meal-info {
+            text-align: left;
+        }
+
+        .calorie-summary {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+
+</body>
+</html>

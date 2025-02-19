@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meal Plan</title>
+    <title>Meal Planner - Healthy Meal Planner</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
     <header>
@@ -14,16 +13,15 @@
 
     <main>
         <h1>Meal Planner</h1>
-        
-        <div class="controls">
-            <button id="generate-meal-plan" aria-label="Generate Meal Plan">Generate Meal Plan</button>
-            <button id="save-meal-plan" aria-label="Save Meal Plan" disabled>Save Meal Plan</button>
+        <p>Click "Generate Meal Plan" to create a personalized meal plan based on your preferences.</p>
+
+        <div class="meal-plan-buttons">
+            <button id="generate-meal-plan" class="btn">Generate Meal Plan</button>
+            <button id="save-meal-plan" class="btn btn-primary">Save Meal Plan</button>
         </div>
 
-        <p id="status-message" class="status-message"></p> <!-- Status Message for Feedback -->
-
-        <div id="meal-plan-container" class="meal-plan-grid">
-            <!-- Meal cards will be injected here dynamically -->
+        <div id="meal-plan-container">
+            <!-- Meal Plan details will be displayed here -->
         </div>
     </main>
 

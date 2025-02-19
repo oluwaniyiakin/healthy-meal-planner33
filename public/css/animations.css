@@ -96,3 +96,29 @@ button:hover {
 button:hover, .meal-card:hover {
     animation: glow 0.5s ease-in-out;
 }
+.meal-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.meal-info h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.meal-ingredients, .meal-instructions {
+    margin-top: 20px;
+    animation: slideUp 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
