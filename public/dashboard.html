@@ -7,43 +7,26 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">Healthy Meal Planner</div>
-            <ul class="nav-links">
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="meal-plan.html">Meal Plan</a></li>
-                <li><a href="shopping-list.html">Shopping List</a></li>
-                <li><a href="login.html" id="logout">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class="container">
+        <h2>Welcome, <span id="user-email"></span></h2>
+        <button id="logout-btn">Logout</button>
+    </div>
+    <script type="module">
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
 
-    <main>
-        <section class="dashboard">
-            <h1>Welcome to Your Dashboard</h1>
-            <div class="dashboard-grid">
-                <div class="card">
-                    <h2>Your Meal Plan</h2>
-                    <p>View and customize your weekly meals.</p>
-                    <a href="meal-plan.html" class="btn">View</a>
-                </div>
-                <div class="card">
-                    <h2>Shopping List</h2>
-                    <p>Automatically generated shopping lists.</p>
-                    <a href="shopping-list.html" class="btn">View</a>
-                </div>
-                <div class="card">
-                    <h2>Ingredient Tracker</h2>
-                    <p>Log your kitchen ingredients and get recipe suggestions.</p>
-                    <a href="ingredients.html" class="btn">View</a>
-                </div>
-            </div>
-        </section>
-    </main>
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById("user-email").innerText = user.email;
+            } else {
+                window.location.href = "login.html"; // Redirect if not logged in
+            }
+        });
 
-    <footer>
-        <p>&copy; 2025 Healthy Meal Planner. All rights reserved.</p>
-    </footer>
+        document.getElementById("logout-btn").addEventListener("click", async () => {
+            await signOut(auth);
+            window.location.href = "login.html";
+        });
+    </script>
 </body>
 </html>
