@@ -1,69 +1,81 @@
-import { saveMealPlan, getUserId, checkAuth } from "../auth/firebaseConfig.js";
-import { fetchRecipes } from "../api/apiHandler.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 
-// Select UI elements
-const mealPlanContainer = document.getElementById("meal-plan-container");
-const generateMealPlanBtn = document.getElementById("generate-meal-plan");
-const saveMealPlanBtn = document.getElementById("save-meal-plan");
+// Firebase Setup
+const auth = getAuth();
+const db = getFirestore();
 
-// Check if user is logged in
-checkAuth((user) => {
-  if (!user) {
-    alert("You must be logged in to save meal plans.");
-    saveMealPlanBtn.style.display = "none"; // Hide button if not logged in
-  } else {
-    saveMealPlanBtn.style.display = "block";
-  }
+// API Keys (Replace with environment variables in production)
+const SPOONACULAR_API_KEY = "c4203a13daf3424886c5349745ea5d8c";
+const API_URL = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&apiKey=${SPOONACULAR_API_KEY}`;
+
+document.addEventListener("DOMContentLoaded", () => {
+    const generateMealBtn = document.getElementById("generate-meal-plan");
+    const saveMealBtn = document.getElementById("save-meal-plan");
+    const mealPlanContainer = document.getElementById("meal-plan-container");
+    const statusMessage = document.getElementById("status-message");
+
+    // Function to Fetch Meal Plan
+    async function fetchMealPlan() {
+        try {
+            statusMessage.textContent = "Generating meal plan...";
+            const response = await fetch(API_URL);
+            const data = await response.json();
+
+            if (!data.meals) {
+                statusMessage.textContent = "Error generating meal plan. Please try again.";
+                return;
+            }
+
+            // Display Meals
+            mealPlanContainer.innerHTML = data.meals.map(meal => `
+                <div class="meal-card">
+                    <h3>${meal.title}</h3>
+                    <p>Ready in: ${meal.readyInMinutes} mins</p>
+                    <a href="${meal.sourceUrl}" target="_blank">View Recipe</a>
+                </div>
+            `).join("");
+
+            statusMessage.textContent = "Meal plan generated successfully!";
+        } catch (error) {
+            console.error("Error fetching meal plan:", error);
+            statusMessage.textContent = "Error fetching meal plan.";
+        }
+    }
+
+    // Function to Save Meal Plan to Firebase
+    async function saveMealPlan() {
+        const user = auth.currentUser;
+        if (!user) {
+            statusMessage.textContent = "Please log in to save your meal plan.";
+            return;
+        }
+
+        const meals = mealPlanContainer.innerHTML;
+        if (!meals) {
+            statusMessage.textContent = "No meal plan to save.";
+            return;
+        }
+
+        try {
+            const userDoc = doc(db, "mealPlans", user.uid);
+            await setDoc(userDoc, { mealPlan: meals, timestamp: new Date() });
+
+            statusMessage.textContent = "Meal plan saved successfully!";
+        } catch (error) {
+            console.error("Error saving meal plan:", error);
+            statusMessage.textContent = "Failed to save meal plan.";
+        }
+    }
+
+    // Event Listeners
+    generateMealBtn.addEventListener("click", fetchMealPlan);
+    saveMealBtn.addEventListener("click", saveMealPlan);
+
+    // Ensure User is Authenticated
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            window.location.href = "login.html"; // Redirect to login
+        }
+    });
 });
-
-// Generate meal plan
-async function generateMealPlan() {
-  try {
-    const meals = await fetchRecipes();
-    const diet = dietSelection.value;
-    displayMealPlan(meals);
-  } catch (error) {
-    console.error("Error fetching meal plan:", error);
-  }
-}
-
-// Display meal plan
-function displayMealPlan(meals) {
-  mealPlanContainer.innerHTML = "";
-
-  meals.forEach((meal) => {
-    const mealCard = document.createElement("div");
-    mealCard.classList.add("meal-card");
-
-    mealCard.innerHTML = `
-      <h3>${meal.title}</h3>
-      <img src="${meal.image}" alt="${meal.title}">
-      <p><strong>Calories:</strong> ${meal.calories} kcal</p>
-      <button class="add-to-shopping-list" data-id="${meal.id}">Add to Shopping List</button>
-    `;
-
-    mealPlanContainer.appendChild(mealCard);
-  });
-
-  // Attach event listeners
-  document.querySelectorAll(".add-to-shopping-list").forEach((btn) => {
-    btn.addEventListener("click", addToShoppingList);
-  });
-}
-
-// Save meal plan to Firebase
-async function saveMealPlanToFirebase() {
-  const userId = getUserId();
-  if (!userId) {
-    alert("You must be logged in to save meal plans.");
-    return;
-  }
-
-  const mealTitles = [...document.querySelectorAll(".meal-card h3")].map((meal) => meal.textContent);
-  await saveMealPlan(userId, mealTitles);
-  alert("Meal Plan Saved Successfully!");
-}
-
-// Attach event listeners
-generateMealPlanBtn.addEventListener("click", generateMealPlan);
-saveMealPlanBtn.addEventListener("click", saveMealPlanToFirebase);

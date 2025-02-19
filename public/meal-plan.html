@@ -14,8 +14,13 @@
 
     <main>
         <h1>Meal Planner</h1>
-        <button id="generate-meal-plan">Generate Meal Plan</button>
-        <button id="save-meal-plan">Save Meal Plan</button>
+        
+        <div class="controls">
+            <button id="generate-meal-plan" aria-label="Generate Meal Plan">Generate Meal Plan</button>
+            <button id="save-meal-plan" aria-label="Save Meal Plan" disabled>Save Meal Plan</button>
+        </div>
+
+        <p id="status-message" class="status-message"></p> <!-- Status Message for Feedback -->
 
         <div id="meal-plan-container" class="meal-plan-grid">
             <!-- Meal cards will be injected here dynamically -->
