@@ -1,11 +1,17 @@
+// Import Firebase App & Services
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"; 
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
 
-// Firebase Setup
-const auth = getAuth();
-const db = getFirestore();
+// ✅ Import Firebase Configuration
+import firebaseConfig from "../auth/firebaseConfig.js"; 
 
-// API Configuration (Replace API key with env variables in production)
+// ✅ Initialize Firebase App using the imported config
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ✅ API Configuration (Replace API key with environment variables in production)
 const SPOONACULAR_API_KEY = "c4203a13daf3424886c5349745ea5d8c";
 const API_URL = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&apiKey=${SPOONACULAR_API_KEY}`;
 
@@ -15,18 +21,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const mealPlanContainer = document.getElementById("meal-plan-container");
     const statusMessage = document.getElementById("status-message");
 
-    // Ensure User is Authenticated
+    // ✅ Ensure User is Authenticated
     onAuthStateChanged(auth, (user) => {
         if (!user) {
-            window.location.href = "login.html"; // Redirect to login if not authenticated
+            window.location.href = "login.html"; // Redirect if not authenticated
         }
     });
 
-    // Fetch Meal Plan from API
+    // ✅ Function to Fetch Meal Plan from API
     async function fetchMealPlan() {
         try {
             statusMessage.textContent = "Generating meal plan...";
             generateMealBtn.disabled = true;
+            saveMealBtn.disabled = true;
 
             const response = await fetch(API_URL);
             const data = await response.json();
@@ -37,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Display Meals
+            // ✅ Display Meals Dynamically
             mealPlanContainer.innerHTML = data.meals.map(meal => `
                 <div class="meal-card">
                     <h3>${meal.title}</h3>
@@ -49,11 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
             statusMessage.textContent = "Meal plan generated successfully!";
             saveMealBtn.disabled = false; // Enable save button
 
-            // Redirect to detailed meal plan page
+            // ✅ Redirect to detailed meal plan page after a short delay
             setTimeout(() => {
                 window.location.href = "detailed-meal-plan.html";
-            }, 1500); // Short delay before redirecting
-
+            }, 1500);
+            
         } catch (error) {
             console.error("Error fetching meal plan:", error);
             statusMessage.textContent = "Error fetching meal plan.";
@@ -62,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Save Meal Plan to Firebase
+    // ✅ Function to Save Meal Plan to Firebase Firestore
     async function saveMealPlan() {
         const user = auth.currentUser;
         if (!user) {
@@ -90,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Event Listeners
+    // ✅ Event Listeners for Buttons
     generateMealBtn.addEventListener("click", fetchMealPlan);
     saveMealBtn.addEventListener("click", saveMealPlan);
 });
