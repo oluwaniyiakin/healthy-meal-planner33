@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping List</title>
+    <title>Shopping List - Healthy Meal Planner</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/animations.css">
 </head>
@@ -13,23 +13,35 @@
     </header>
 
     <main>
-        <h1>Shopping List</h1>
-        <button id="clear-shopping-list">Clear Shopping List</button>
+        <section class="intro">
+            <h1>Shopping List</h1>
+            <p>Here’s your generated shopping list based on your meal plan. You can modify, save, or clear it.</p>
+        </section>
 
-        <ul id="shopping-list-container" class="shopping-list">
-            <!-- Items will be dynamically added here -->
-        </ul>
+        <section class="filters">
+            <label for="diet-selection">Filter by Diet:</label>
+            <select id="diet-selection">
+                <option value="">Any Diet</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="keto">Keto</option>
+            </select>
+        </section>
+
+        <section class="shopping-list-container">
+            <ul id="shopping-list" class="shopping-list">
+                <!-- Items will be dynamically added here -->
+            </ul>
+        </section>
+
+        <div class="shopping-list-controls">
+            <button id="save-shopping-list" class="btn">Save List</button>
+            <button id="clear-shopping-list" class="btn btn-danger">Clear Shopping List</button>
+        </div>
     </main>
-    <select id="diet-selection">
-        <option value="">Any Diet</option>
-        <option value="vegetarian">Vegetarian</option>
-        <option value="vegan">Vegan</option>
-        <option value="keto">Keto</option>
-    </select>
-    
 
     <footer>
-        <p>&copy; 2025 Healthy Meal Planner</p>
+        <p>&copy; 2025 Healthy Meal Planner | Built with ❤️</p>
     </footer>
 
     <script src="src/components/navbar.js"></script>
