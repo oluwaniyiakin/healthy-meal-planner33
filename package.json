@@ -1,0 +1,14 @@
+{
+    "name": "healthy-meal-planner",
+    "version": "1.0.0",
+    "description": "A web app to plan healthy meals and shopping lists using Spoonacular & Edamam APIs.",
+    "main": "src/main.js",
+    "scripts": {
+      "start": "firebase serve",
+      "deploy": "firebase deploy"
+    },
+    "dependencies": {
+      "firebase": "^10.0.0"
+    }
+  }
+  

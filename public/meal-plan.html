@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Plan</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <header>
+        <nav id="navbar"></nav>
+    </header>
+
+    <main>
+        <h1>Meal Planner</h1>
+        <button id="generate-meal-plan">Generate Meal Plan</button>
+        <button id="save-meal-plan">Save Meal Plan</button>
+
+        <div id="meal-plan-container" class="meal-plan-grid">
+            <!-- Meal cards will be injected here dynamically -->
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Healthy Meal Planner</p>
+    </footer>
+
+    <script src="src/components/navbar.js"></script>
+    <script src="src/components/mealPlan.js" type="module"></script>
+</body>
+</html>

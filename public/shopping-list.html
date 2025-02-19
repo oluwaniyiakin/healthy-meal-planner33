@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <header>
+        <nav id="navbar"></nav>
+    </header>
+
+    <main>
+        <h1>Shopping List</h1>
+        <button id="clear-shopping-list">Clear Shopping List</button>
+
+        <ul id="shopping-list-container" class="shopping-list">
+            <!-- Items will be dynamically added here -->
+        </ul>
+    </main>
+    <select id="diet-selection">
+        <option value="">Any Diet</option>
+        <option value="vegetarian">Vegetarian</option>
+        <option value="vegan">Vegan</option>
+        <option value="keto">Keto</option>
+    </select>
+    
+
+    <footer>
+        <p>&copy; 2025 Healthy Meal Planner</p>
+    </footer>
+
+    <script src="src/components/navbar.js"></script>
+    <script src="src/components/shoppingList.js" type="module"></script>
+</body>
+</html>
