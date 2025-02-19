@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detailed Meal Plan | Healthy Meal Planner</title>
+    <title>7-Day Detailed Meal Plan | Healthy Meal Planner</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/animations.css">
     <script defer src="src/main.js"></script>
@@ -36,23 +36,41 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const mealPlanData = [
-                {
-                    day: "Monday",
-                    meals: [
-                        { type: "Breakfast", name: "Oatmeal with Berries", calories: 250, img: "images/oatmeal.jpg" },
-                        { type: "Lunch", name: "Grilled Chicken Salad", calories: 400, img: "images/salad.jpg" },
-                        { type: "Dinner", name: "Salmon with Quinoa", calories: 550, img: "images/salmon.jpg" }
-                    ]
-                },
-                {
-                    day: "Tuesday",
-                    meals: [
-                        { type: "Breakfast", name: "Greek Yogurt & Nuts", calories: 300, img: "images/yogurt.jpg" },
-                        { type: "Lunch", name: "Quinoa & Veggie Bowl", calories: 450, img: "images/quinoa-bowl.jpg" },
-                        { type: "Dinner", name: "Tofu Stir-fry with Rice", calories: 500, img: "images/tofu.jpg" }
-                    ]
-                }
-                // Add other days similarly...
+                { day: "Monday", meals: [
+                    { type: "Breakfast", name: "Oatmeal with Berries", calories: 250, img: "images/oatmeal.jpg" },
+                    { type: "Lunch", name: "Grilled Chicken Salad", calories: 400, img: "images/salad.jpg" },
+                    { type: "Dinner", name: "Salmon with Quinoa", calories: 550, img: "images/salmon.jpg" }
+                ]},
+                { day: "Tuesday", meals: [
+                    { type: "Breakfast", name: "Greek Yogurt & Nuts", calories: 300, img: "images/yogurt.jpg" },
+                    { type: "Lunch", name: "Quinoa & Veggie Bowl", calories: 450, img: "images/quinoa-bowl.jpg" },
+                    { type: "Dinner", name: "Tofu Stir-fry with Rice", calories: 500, img: "images/tofu.jpg" }
+                ]},
+                { day: "Wednesday", meals: [
+                    { type: "Breakfast", name: "Scrambled Eggs & Toast", calories: 350, img: "images/eggs-toast.jpg" },
+                    { type: "Lunch", name: "Chicken Wrap", calories: 500, img: "images/wrap.jpg" },
+                    { type: "Dinner", name: "Grilled Fish & Veggies", calories: 550, img: "images/fish-veggies.jpg" }
+                ]},
+                { day: "Thursday", meals: [
+                    { type: "Breakfast", name: "Smoothie Bowl", calories: 320, img: "images/smoothie-bowl.jpg" },
+                    { type: "Lunch", name: "Tuna Salad", calories: 420, img: "images/tuna-salad.jpg" },
+                    { type: "Dinner", name: "Beef Stir-fry & Rice", calories: 580, img: "images/beef-stirfry.jpg" }
+                ]},
+                { day: "Friday", meals: [
+                    { type: "Breakfast", name: "Pancakes with Honey", calories: 380, img: "images/pancakes.jpg" },
+                    { type: "Lunch", name: "Brown Rice & Chicken", calories: 480, img: "images/brown-rice-chicken.jpg" },
+                    { type: "Dinner", name: "Vegetable Pasta", calories: 520, img: "images/veggie-pasta.jpg" }
+                ]},
+                { day: "Saturday", meals: [
+                    { type: "Breakfast", name: "Avocado Toast", calories: 350, img: "images/avocado-toast.jpg" },
+                    { type: "Lunch", name: "Baked Salmon & Couscous", calories: 470, img: "images/couscous-salmon.jpg" },
+                    { type: "Dinner", name: "Lentil Soup & Bread", calories: 500, img: "images/lentil-soup.jpg" }
+                ]},
+                { day: "Sunday", meals: [
+                    { type: "Breakfast", name: "French Toast & Berries", calories: 400, img: "images/french-toast.jpg" },
+                    { type: "Lunch", name: "Shrimp & Quinoa Bowl", calories: 460, img: "images/shrimp-quinoa.jpg" },
+                    { type: "Dinner", name: "Stuffed Peppers", calories: 550, img: "images/stuffed-peppers.jpg" }
+                ]}
             ];
 
             let totalCalories = 0;
@@ -140,10 +158,6 @@
             background: #45a049;
         }
 
-        .collapsible.active {
-            background: #388E3C;
-        }
-
         .content {
             max-height: 0;
             overflow: hidden;
@@ -158,19 +172,11 @@
             border-bottom: 1px solid #ddd;
         }
 
-        .meal:last-child {
-            border-bottom: none;
-        }
-
         .meal img {
             width: 80px;
             height: 80px;
             border-radius: 10px;
             margin-right: 15px;
-        }
-
-        .meal-info {
-            text-align: left;
         }
 
         .calorie-summary {
